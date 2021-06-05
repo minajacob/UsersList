@@ -1,6 +1,10 @@
 
-<button mat-raised-button color="primary" class="mb-3" (click)="addNewUser()">
-    Add User
+<button mat-raised-button color="primary" class="mb-3 me-3" (click)="addNewUser()">
+    Add User From Page
+</button>
+
+<button mat-raised-button color="primary" class="mb-3" (click)="addNewUserFromModal()">
+    Add User From Modal
 </button>
 
 <mat-table [dataSource]="dataSource" class="mat-elevation-z8">
@@ -13,7 +17,7 @@
     <!-- Image Column -->
     <ng-container matColumnDef="image">
         <mat-header-cell *matHeaderCellDef> Image </mat-header-cell>
-        <mat-cell *matCellDef="let element"> <img class="user-avatar" mat-card-avatar [src]="element.avatar"> </mat-cell>
+        <mat-cell *matCellDef="let element"> <img class="user-avatar" mat-card-avatar [src]="element.avatar || 'assets/imgs/default_avatar_placeholder.png'"> </mat-cell>
     </ng-container>
 
     <!-- First_name Column -->
@@ -44,6 +48,11 @@
     </ng-container>
 
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="getUser(row)" ></mat-row>
 </mat-table>
 <mat-paginator [pageSizeOptions]="[5, 10, 20]" [length]="totalLength" showFirstLastButtons></mat-paginator>
+
+
+<ng-template #userformCom>
+    <app-user-form [user]="selectedUser" ></app-user-form>
+</ng-template>

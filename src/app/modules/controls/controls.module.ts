@@ -9,6 +9,8 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatDialogModule } from '@angular/material/dialog';
+import { DialogComponent } from 'src/app/base/components/dialog/dialog.component';
 
 const modules = [
   MatToolbarModule,
@@ -19,11 +21,14 @@ const modules = [
   MatPaginatorModule,
   MatCardModule,
   MatFormFieldModule,
-  MatInputModule
+  MatInputModule,
+  MatDialogModule
 ]
 
 @NgModule({
-  declarations: [],
+  declarations: [
+    DialogComponent
+  ],
   imports: [
     CommonModule,
     ...modules

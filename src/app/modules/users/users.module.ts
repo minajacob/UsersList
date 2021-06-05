@@ -7,6 +7,7 @@ import { UsersService } from './services/users.service';
 import { UserPageComponent } from './user-page/user-page.component';
 import { UserFormComponent } from './user-form/user-form.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { UserDialogComponent } from './user-dialog/user-dialog.component';
 
 
 
@@ -14,16 +15,15 @@ import { ReactiveFormsModule } from '@angular/forms';
   declarations: [
     ListComponent,
     UserPageComponent,
-    UserFormComponent
+    UserFormComponent,
+    UserDialogComponent
   ],
-  providers: [
-    UsersService
-  ],
+  providers: [],
   imports: [
     CommonModule,
     ControlsModule,
     UsersRoutingModule,
     ReactiveFormsModule
-  ]
+  ],
 })
 export class UsersModule { }

@@ -1,8 +1,10 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
 import { IFilter, IUser } from 'src/app/base/api.model';
+import { DialogService } from 'src/app/base/services/dialog.service';
 import { UsersService } from '../services/users.service';
 
 export interface PeriodicElement {
@@ -23,9 +25,12 @@ export class ListComponent implements OnInit, AfterViewInit {
   dataSource = new MatTableDataSource<IUser>([]);
   totalLength: number = 0;
 
-  @ViewChild(MatPaginator) paginator!: MatPaginator; 
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  constructor(private usersSvc: UsersService, private router: Router) { }
+  selectedUser!: IUser;
+  @ViewChild("userformCom") userformTemplate!: TemplateRef<any>;
+
+  constructor(private usersSvc: UsersService, private router: Router, private dialog: DialogService) { }
 
   ngOnInit(): void {
     this.getAllUsers();
@@ -51,6 +56,27 @@ export class ListComponent implements OnInit, AfterViewInit {
 
   addNewUser() {
     this.router.navigateByUrl("users/new");
+  }
+
+  addNewUserFromModal() {
+    this.dialog.addUser({ user: {} as IUser }).afterClosed().subscribe(res => {
+      if (res) {
+        this.dataSource.data = [...this.dataSource.data, res as IUser];
+        this.totalLength += 1;
+      }
+
+    });
+  }
+
+  // addUserRequest() {
+  //   new Observable(subject => {
+  //     this.user
+  //   })
+  // }
+
+  getUser(user: IUser) {
+    this.selectedUser = user;
+    this.dialog.open({ data: { title: `${user.first_name} ${user.last_name}`, template: this.userformTemplate }, disableClose: true});
   }
 
 }

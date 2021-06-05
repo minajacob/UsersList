@@ -10,7 +10,7 @@ import { IUser } from 'src/app/base/api.model';
 export class UserFormComponent implements OnInit {
 
   userForm!: FormGroup;
-  image: string = "assets/imgs/default_avatar_placeholder.png";
+  image!: string;
 
   @Input() user: IUser = { first_name: "", last_name: "", avatar: "", email: "", id: 0 };
   @Output() onSubmit = new EventEmitter<IUser>();
@@ -28,8 +28,10 @@ export class UserFormComponent implements OnInit {
       "first_name": new FormControl(this.user.first_name, [Validators.required]),
       "last_name": new FormControl(this.user.last_name, [Validators.required]),
       "email": new FormControl(this.user.email, [Validators.required]),
-      // "avatar": new FormControl(this.user.avatar, [Validators.required]),
+      "avatar": new FormControl(this.user.avatar),
     })
+
+    this.image = this.userForm.value.avatar || "assets/imgs/default_avatar_placeholder.png";
   }
 
   imageUploaded(event: Event) {

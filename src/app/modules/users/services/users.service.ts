@@ -3,7 +3,9 @@ import { IFilter, IListResponse, IUser } from "src/app/base/api.model";
 import { BaseApiService } from "src/app/base/ApiService";
 import { msgToastr } from "src/app/base/Interceptors/toastr/toastr.interceptor";
 
-@Injectable()
+@Injectable({
+    providedIn: "root"
+})
 export class UsersService extends BaseApiService {
 
     protected controllerName: string = "users";

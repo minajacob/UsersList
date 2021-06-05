@@ -1,0 +1,15 @@
+<!-- Dialog Title -->
+<h3 mat-dialog-title>
+    {{data.title}}
+</h3>
+
+<!-- Dialog Content -->
+<div mat-dialog-content>
+    <ng-template *ngIf="data.template" [ngTemplateOutlet]="data.template"></ng-template>
+</div>
+
+<!-- Dialog Actions -->
+<div mat-dialog-actions>
+    <button mat-stroked-button (click)="cancel()">Cancel</button>
+    <button mat-raised-button (click)="ok()" color="primary" cdkFocusInitial>Ok</button>
+</div>
