@@ -1,6 +1,19 @@
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpContext } from "@angular/common/http";
 import { Directive } from "@angular/core";
 import { environment } from "src/environments/environment";
+
+export interface IApiDto {
+    action: string;
+    context: HttpContext;
+}
+
+export interface IGetOption extends IApiDto {
+    params: { [key: string]: any }
+}
+
+export interface IPostOption extends IApiDto {
+    body: object
+}
 
 @Directive()
 export abstract class BaseApiService {
@@ -17,11 +30,19 @@ export abstract class BaseApiService {
         return `${this.serverUrl}${this.controllerName}`
     }
 
-    protected get<T>(action: string, params: { [key: string]: any } = {}) {
-        return this.httpClient.get<T>(this.fullUrl(action), { params: params });
+    protected createGetDto(action: string, params: { [key: string]: any } = {}) {
+        return { action: action, params: params } as IGetOption;
     }
 
-    protected post(action: string, params: object) {
-        return this.httpClient.post(this.fullUrl(action), params);
+    protected createPostDto(action: string, body: object) {
+        return { action: action, body: body } as IPostOption;
+    }
+
+    protected get<T>(getDto: IGetOption) {
+        return this.httpClient.get<T>(this.fullUrl(getDto.action), { params: getDto.params, context: getDto.context });
+    }
+
+    protected post(postDto: IPostOption) {
+        return this.httpClient.post(this.fullUrl(postDto.action), postDto.body, { context: postDto.context });
     }
 }

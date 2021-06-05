@@ -15,11 +15,7 @@ export class UserPageComponent implements OnInit {
   }
 
   onSubmit(user: IUser){
-    console.log(user);
-    this.usersSvc.add(user).subscribe(res => {
-      console.log(res);
-    })
-    
+    this.usersSvc.add(user).subscribe(res => {  })
   }
 
 }
