@@ -1,7 +1,11 @@
-<app-user-form #userCom (onSubmit)="onSubmit($event)" ></app-user-form>
+<app-user-form [user]="user" [viewMode]="viewMode" #userCom (onSubmit)="onSubmit($event)" ></app-user-form>
 
 <div>
-    <button type="button" mat-raised-button color="primary" (click)="userCom.submit($event)">
-        Add
+    <button type="button" *ngIf="!viewMode" mat-raised-button color="primary" (click)="userCom.submit($event)">
+        {{ userId > 0 ? "Update" : "Add"   }}
+    </button>
+
+    <button type="button" *ngIf="viewMode" mat-raised-button color="primary" (click)="editUser()">
+        Edit
     </button>
 </div>

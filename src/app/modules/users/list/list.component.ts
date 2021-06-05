@@ -28,7 +28,7 @@ export class ListComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   selectedUser!: IUser;
-  @ViewChild("userformCom") userformTemplate!: TemplateRef<any>;
+  @ViewChild("confirmDeleteUser") confirmDeleteUser!: TemplateRef<any>;
 
   constructor(private usersSvc: UsersService, private router: Router, private dialog: DialogService) { }
 
@@ -59,24 +59,47 @@ export class ListComponent implements OnInit, AfterViewInit {
   }
 
   addNewUserFromModal() {
-    this.dialog.addUser({ user: {} as IUser }).afterClosed().subscribe(res => {
+    this.dialog.opeUser({ user: {} as IUser }).afterClosed().subscribe(res => {
       if (res) {
         this.dataSource.data = [...this.dataSource.data, res as IUser];
         this.totalLength += 1;
       }
-
     });
   }
 
-  // addUserRequest() {
-  //   new Observable(subject => {
-  //     this.user
-  //   })
-  // }
+  viewUser(user: IUser) {
+    this.dialog.opeUser({ user, viewMode: true, title: `${user.first_name} ${user.last_name}` }).afterClosed().subscribe(res => {
+      if (res) {
+        Object.assign(user, res);
+      }
+    });
+  }
 
-  getUser(user: IUser) {
+  editUser(event: Event , user: IUser) {
+    event.stopPropagation();
+    this.dialog.opeUser({ user, editMode: true, title: `${user.first_name} ${user.last_name}` }).afterClosed().subscribe(res => {
+      if (res) {
+        Object.assign(user, res);
+      }
+    });
+  }
+
+  deleteUser(event: Event ,user: IUser) {
+    event.stopPropagation();
     this.selectedUser = user;
-    this.dialog.open({ data: { title: `${user.first_name} ${user.last_name}`, template: this.userformTemplate }, disableClose: true});
+    let deleteUser = new Observable<void>(sub => {
+      this.usersSvc.deleteUser(user.id).subscribe(() => {
+        sub.next();
+        this.dataSource.data = [...this.dataSource.data.filter(u => u.id !== user.id)];
+        this.totalLength -= 1;
+      })
+    })
+    this.dialog.open({ data: { title: `Are you sure to detele this user ?`, template: this.confirmDeleteUser, okColor: "warn", OkAction: deleteUser }, disableClose: true});
+  }
+
+  viewUserInPage(event: Event ,user: IUser) {
+    event.stopPropagation();
+    this.router.navigateByUrl(`users/${user.id}`);
   }
 
 }

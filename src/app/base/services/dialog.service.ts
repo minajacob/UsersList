@@ -19,7 +19,8 @@ export class DialogService {
     width: "400px",
     data: {
       title: "",
-      template: null
+      template: null,
+      okColor: "primary"
     } as IDialogData
   }
 
@@ -29,7 +30,7 @@ export class DialogService {
     return this.dialog.open(DialogComponent, { ...this.defualtOptions, ...config });
   }
 
-  addUser(config: IUserDialogData) {
+  opeUser(config: IUserDialogData) {
     return this.dialog.open<UserDialogComponent, IUserDialogData, IUser>(UserDialogComponent, { ...this.defualtOptions, data: { title: "Add New User", ...config }, disableClose: true });
   }
 }

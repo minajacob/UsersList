@@ -42,17 +42,18 @@
     <ng-container matColumnDef="actions">
         <mat-header-cell *matHeaderCellDef> </mat-header-cell>
         <mat-cell *matCellDef="let element">
-            <button mat-raised-button color="primary" class="me-2"> <mat-icon>edit</mat-icon> Edit </button>
-            <button mat-raised-button color="warn"> <mat-icon>delete</mat-icon> Delete </button>
+            <button mat-raised-button color="primary" class="me-2" (click)="editUser($event, element)" > <mat-icon>edit</mat-icon> Edit </button>
+            <button mat-raised-button color="warn" class="me-2" (click)="deleteUser($event, element)"> <mat-icon>delete</mat-icon> Delete </button>
+            <button mat-raised-button color="primary" class="me-2" (click)="viewUserInPage($event, element)"> <mat-icon>visibility</mat-icon> View </button>
         </mat-cell>
     </ng-container>
 
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="getUser(row)" ></mat-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="viewUser(row)" ></mat-row>
 </mat-table>
 <mat-paginator [pageSizeOptions]="[5, 10, 20]" [length]="totalLength" showFirstLastButtons></mat-paginator>
 
 
-<ng-template #userformCom>
-    <app-user-form [user]="selectedUser" ></app-user-form>
+<ng-template #confirmDeleteUser>
+    <app-user-form [user]="selectedUser" [viewMode]="true"></app-user-form>
 </ng-template>

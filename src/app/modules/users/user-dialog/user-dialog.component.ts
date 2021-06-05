@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { AfterViewInit, Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { IUser } from 'src/app/base/api.model';
 import { UsersService } from '../services/users.service';
@@ -10,12 +10,21 @@ import { IUserDialogData } from './user-dialog.model';
   templateUrl: './user-dialog.component.html',
   styleUrls: ['./user-dialog.component.scss']
 })
-export class UserDialogComponent implements OnInit {
+export class UserDialogComponent implements OnInit, AfterViewInit {
+
+  @ViewChild(UserFormComponent) userForm!: UserFormComponent;
 
   constructor(public dialogRef: MatDialogRef<UserDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: IUserDialogData, private usersSvc: UsersService) { }
 
   ngOnInit(): void {
+
+  }
+
+  ngAfterViewInit(): void {
+    if (this.data.viewMode) {
+      this.userForm.readOnly();
+    }
   }
 
   cancel() {
@@ -27,9 +36,16 @@ export class UserDialogComponent implements OnInit {
   }
 
   onSubmit(user: IUser) {
-    this.usersSvc.add(user).subscribe(res => {
-      this.dialogRef.close(user);
-    })
+    if (!this.data.editMode) {
+      this.usersSvc.add(user).subscribe(res => {
+        this.dialogRef.close(user);
+      })
+    } else {
+      this.usersSvc.update(user).subscribe(res => {
+        this.dialogRef.close(user);
+      })
+    }
+    
   }
 
 }

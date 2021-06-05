@@ -11,27 +11,49 @@ export class UserFormComponent implements OnInit {
 
   userForm!: FormGroup;
   image!: string;
+  private _user: IUser = { first_name: "", last_name: "", avatar: "", email: "", id: 0 };
+  private _viewMode = false;
 
-  @Input() user: IUser = { first_name: "", last_name: "", avatar: "", email: "", id: 0 };
+  @Input() set user(user: IUser){
+    if (user) {
+      this._user = user;
+    }    
+    this.initUserForm();
+  }
+
+  @Input() set viewMode(val: boolean) {
+    if (val == this._viewMode) {
+      return;
+    }
+    this._viewMode = val;
+    if (val) {
+      this.readOnly();
+    } else {
+      this.userForm.enable();
+    }
+  }
+
   @Output() onSubmit = new EventEmitter<IUser>();
 
   @ViewChild("ngForm") form!: FormGroupDirective;
 
   constructor() { }
 
-  ngOnInit(): void {
-    this.initUserForm();
-  }
+  ngOnInit(): void {}
 
   initUserForm() {
     this.userForm = new FormGroup({
-      "first_name": new FormControl(this.user.first_name, [Validators.required]),
-      "last_name": new FormControl(this.user.last_name, [Validators.required]),
-      "email": new FormControl(this.user.email, [Validators.required]),
-      "avatar": new FormControl(this.user.avatar),
+      "first_name": new FormControl(this._user.first_name, [Validators.required]),
+      "last_name": new FormControl(this._user.last_name, [Validators.required]),
+      "email": new FormControl(this._user.email, [Validators.required]),
+      "avatar": new FormControl(this._user.avatar),
     })
 
     this.image = this.userForm.value.avatar || "assets/imgs/default_avatar_placeholder.png";
+
+    if (this._viewMode) {
+      this.readOnly();
+    }
   }
 
   imageUploaded(event: Event) {
@@ -55,5 +77,13 @@ export class UserFormComponent implements OnInit {
     if (form.valid) {
       this.onSubmit.emit(form.value);
     }
+  }
+
+  readOnly(){
+    this.userForm.disable();
+  }
+
+  get disabled() {
+    return this.userForm.disabled;
   }
 }

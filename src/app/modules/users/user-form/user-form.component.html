@@ -4,7 +4,7 @@
         <img [src]="image" class="user-avatar" >
     </div>
 
-    <div class="mb-2">
+    <div class="mb-2" *ngIf="!userForm.disabled">
         <input type="file" hidden #fileUploader (change)="imageUploaded($event)" />
         <button mat-stroked-button type="button" (click)="fileUploader.click()" >
             Upload Image

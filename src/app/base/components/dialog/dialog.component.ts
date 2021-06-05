@@ -20,9 +20,9 @@ export class DialogComponent implements OnInit {
   }
 
   ok() {
-    // if (this.data.ok()) {
-      
-    // }
+    this.data.OkAction.subscribe(() => {
+      this.dialogRef.close();
+    })
   }
 
 }

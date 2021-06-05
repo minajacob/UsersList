@@ -7,9 +7,12 @@
     background-size: cover;
 }
 
-.mat-row:hover {
-    .mat-column-actions {
-        visibility: visible;
+.mat-row {
+    cursor: pointer;
+    &:hover {
+        .mat-column-actions {
+            visibility: visible;
+        }
     }
 }
 
