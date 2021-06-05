@@ -10,11 +10,18 @@ export abstract class BaseApiService {
 
     constructor(private httpClient: HttpClient) { }
 
+    private fullUrl(action: string) {
+        if (action) {
+            return `${this.serverUrl}${this.controllerName}/${action}`
+        }
+        return `${this.serverUrl}${this.controllerName}`
+    }
+
     protected get<T>(action: string, params: { [key: string]: any } = {}) {
-        return this.httpClient.get<T>(`${this.serverUrl}${this.controllerName}/${action}`, { params: params });
+        return this.httpClient.get<T>(this.fullUrl(action), { params: params });
     }
 
     protected post(action: string, params: object) {
-        return this.httpClient.post(`${this.serverUrl}${this.controllerName}/${action}`, params);
+        return this.httpClient.post(this.fullUrl(action), params);
     }
 }

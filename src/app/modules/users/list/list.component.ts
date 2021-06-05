@@ -1,8 +1,9 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
+import { Router } from '@angular/router';
 import { IFilter, IUser } from 'src/app/base/api.model';
-import { listService } from './list.service';
+import { UsersService } from '../services/users.service';
 
 export interface PeriodicElement {
   name: string;
@@ -24,7 +25,7 @@ export class ListComponent implements OnInit, AfterViewInit {
 
   @ViewChild(MatPaginator) paginator!: MatPaginator; 
 
-  constructor(private listSvc: listService) { }
+  constructor(private usersSvc: UsersService, private router: Router) { }
 
   ngOnInit(): void {
     this.getAllUsers();
@@ -42,14 +43,14 @@ export class ListComponent implements OnInit, AfterViewInit {
       filter = { page: this.paginator.pageIndex + 1, per_page: this.paginator.pageSize };
     }
 
-    this.listSvc.list(filter).subscribe(res => {
+    this.usersSvc.list(filter).subscribe(res => {
       this.dataSource.data = res.data;
       this.totalLength = res.total;
     })
   }
 
   addNewUser() {
-    
+    this.router.navigateByUrl("users/new");
   }
 
 }

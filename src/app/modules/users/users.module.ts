@@ -3,21 +3,27 @@ import { CommonModule } from '@angular/common';
 import { ListComponent } from './list/list.component';
 import { ControlsModule } from '../controls/controls.module';
 import { UsersRoutingModule } from './users-routing.module';
-import { listService } from './list/list.service';
+import { UsersService } from './services/users.service';
+import { UserPageComponent } from './user-page/user-page.component';
+import { UserFormComponent } from './user-form/user-form.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 
 @NgModule({
   declarations: [
-    ListComponent
+    ListComponent,
+    UserPageComponent,
+    UserFormComponent
   ],
   providers: [
-    listService
+    UsersService
   ],
   imports: [
     CommonModule,
     ControlsModule,
-    UsersRoutingModule
+    UsersRoutingModule,
+    ReactiveFormsModule
   ]
 })
 export class UsersModule { }

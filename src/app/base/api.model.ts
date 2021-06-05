@@ -16,4 +16,5 @@ export interface IUser {
     last_name: string;
     email: string;
     avatar: string;
+    createdAt?: any;
 }
