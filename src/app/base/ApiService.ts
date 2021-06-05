@@ -30,11 +30,11 @@ export abstract class BaseApiService {
         return `${this.serverUrl}${this.controllerName}`
     }
 
-    protected createGetDto(action: string, params: { [key: string]: any } = {}) {
+    protected createGetDto(action: string | number, params: { [key: string]: any } = {}) {
         return { action: action, params: params } as IGetOption;
     }
 
-    protected createPostDto(action: string, body: object) {
+    protected createPostDto(action: string | number, body: object) {
         return { action: action, body: body } as IPostOption;
     }
 
@@ -44,5 +44,13 @@ export abstract class BaseApiService {
 
     protected post(postDto: IPostOption) {
         return this.httpClient.post(this.fullUrl(postDto.action), postDto.body, { context: postDto.context });
+    }
+
+    protected put(postDto: IPostOption) {
+        return this.httpClient.put(this.fullUrl(postDto.action), postDto.body, { context: postDto.context });
+    }
+
+    protected delete(postDto: IPostOption) {
+        return this.httpClient.delete(this.fullUrl(postDto.action), { context: postDto.context });
     }
 }
