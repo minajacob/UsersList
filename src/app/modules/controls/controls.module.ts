@@ -5,13 +5,17 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatCardModule } from '@angular/material/card';
 
 const modules = [
   MatToolbarModule,
   MatIconModule,
   MatButtonModule,
   MatSidenavModule,
-  MatTableModule
+  MatTableModule,
+  MatPaginatorModule,
+  MatCardModule
 ]
 
 @NgModule({

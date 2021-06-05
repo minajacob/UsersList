@@ -5,6 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ControlsModule } from './modules/controls/controls.module';
+import { CoreModule } from './modules/core/core.module';
 
 @NgModule({
   declarations: [
@@ -14,6 +15,7 @@ import { ControlsModule } from './modules/controls/controls.module';
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    CoreModule,
     ControlsModule
   ],
   providers: [],

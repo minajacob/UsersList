@@ -1,0 +1,49 @@
+
+<button mat-raised-button color="primary" class="mb-3" (clic)="addNewUser()">
+    Add User
+</button>
+
+<mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+    <!-- Id Column -->
+    <!-- <ng-container matColumnDef="id">
+        <mat-header-cell *matHeaderCellDef> No. </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.id}} </mat-cell>
+    </ng-container> -->
+
+    <!-- Image Column -->
+    <ng-container matColumnDef="image">
+        <mat-header-cell *matHeaderCellDef> Image </mat-header-cell>
+        <mat-cell *matCellDef="let element"> <img class="user-avatar" mat-card-avatar [src]="element.avatar"> </mat-cell>
+    </ng-container>
+
+    <!-- First_name Column -->
+    <ng-container matColumnDef="first_name">
+        <mat-header-cell *matHeaderCellDef> First Name </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.first_name}} </mat-cell>
+    </ng-container>
+
+    <!-- Last_name Column -->
+    <ng-container matColumnDef="last_name">
+        <mat-header-cell *matHeaderCellDef> Last Name </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.last_name}} </mat-cell>
+    </ng-container>
+
+    <!-- Email Column -->
+    <ng-container matColumnDef="email">
+        <mat-header-cell *matHeaderCellDef> Email </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.email}} </mat-cell>
+    </ng-container>
+
+    <!-- Email Column -->
+    <ng-container matColumnDef="actions">
+        <mat-header-cell *matHeaderCellDef> </mat-header-cell>
+        <mat-cell *matCellDef="let element">
+            <button mat-raised-button color="primary" class="me-2"> <mat-icon>edit</mat-icon> Edit </button>
+            <button mat-raised-button color="warn"> <mat-icon>delete</mat-icon> Delete </button>
+        </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+</mat-table>
+<mat-paginator [pageSizeOptions]="[5, 10, 20]" [length]="totalLength" showFirstLastButtons></mat-paginator>
