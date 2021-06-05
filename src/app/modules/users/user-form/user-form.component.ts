@@ -49,7 +49,7 @@ export class UserFormComponent implements OnInit {
       "avatar": new FormControl(this._user.avatar),
     })
 
-    this.image = this.userForm.value.avatar || "assets/imgs/default_avatar_placeholder.png";
+    this.image = this.userForm.value.avatar;
 
     if (this._viewMode) {
       this.readOnly();
@@ -85,5 +85,11 @@ export class UserFormComponent implements OnInit {
 
   get disabled() {
     return this.userForm.disabled;
+  }
+
+  reset() {
+    this.image = "";
+    this.form.resetForm();
+    // this.initUserForm();
   }
 }

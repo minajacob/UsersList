@@ -38,7 +38,7 @@ export class UsersService extends BaseApiService {
 
     deleteUser(userId: number) {
         let postDto = this.createPostDto(userId, {});
-        postDto.context = msgToastr(`User ${userId} deleted successfully 😀`);
+        postDto.context = msgToastr(`User id ${userId} deleted successfully 😀`);
         return this.delete(postDto);
     }
 }

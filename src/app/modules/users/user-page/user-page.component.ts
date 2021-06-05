@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { IUser } from 'src/app/base/api.model';
 import { UsersService } from '../services/users.service';
+import { UserFormComponent } from '../user-form/user-form.component';
 
 @Component({
   selector: 'app-user-page',
@@ -14,24 +15,30 @@ export class UserPageComponent implements OnInit {
   viewMode = false;
   userId: number = 0;
 
+  @ViewChild("userCom") userForm!: UserFormComponent;
+
   constructor(private usersSvc: UsersService, private activatedRoute: ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.userId = +this.activatedRoute.snapshot.params['userId'];
-    if (this.userId) {
-      this.viewMode = true;
-      this.usersSvc.getById(this.userId).subscribe( user => {
-        this.user = user.data;
-      })
-    }
+    this.activatedRoute.params.subscribe(params => {
+      this.userId = params['userId'];
+      if (this.userId) {
+        this.viewMode = true;
+        this.usersSvc.getById(this.userId).subscribe(user => {
+          this.user = user.data;
+        })
+      }
+    })
   }
 
   onSubmit(user: IUser){
-    if (this.userId == 0) {
-      this.usersSvc.add(user).subscribe(res => {  })
-    } else {
+    if (this.userId > 0) {
       this.usersSvc.update({ ...user, id: this.userId }).subscribe(res => {
         this.viewMode = true;
+      })
+    } else {
+      this.usersSvc.add(user).subscribe(res => {
+        this.userForm.reset();
       })
     }
   }

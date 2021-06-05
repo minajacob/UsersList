@@ -4,21 +4,36 @@
   </button>
   <span>Users</span>
   <span class="spacer"></span>
-  <button mat-icon-button>
-    <mat-icon>favorite</mat-icon>
-  </button>
-  <button mat-icon-button>
-    <mat-icon>share</mat-icon>
-  </button>
+  <a mat-icon-button target="_blank" href="https://github.com/minajacob/UsersList">
+    <mat-icon>code</mat-icon>
+  </a>
 </mat-toolbar>
 
 <mat-sidenav-container class="sidenav-container" autosize>
-  <mat-sidenav #drawer class="sidenav" mode="side" opened >
-    <p>Auto-resizing sidenav</p>
-    <!-- <p *ngIf="showFiller">Lorem, ipsum dolor sit amet consectetur.</p>
-    <button (click)="showFiller = !showFiller" mat-raised-button>
-      Toggle extra text
-    </button> -->
+  <mat-sidenav #drawer class="sidenav" mode="side" opened>
+  
+    <mat-nav-list class="menu">
+      <mat-list-item routerLink="users" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+        <a matLine>Users List</a>
+        <button mat-icon-button>
+          <mat-icon>format_list_bulleted</mat-icon>
+        </button>
+      </mat-list-item>
+  
+      <mat-list-item routerLink="users/new" routerLinkActive="active">
+        <a matLine>Add User</a>
+        <button mat-icon-button>
+          <mat-icon>person_add_alt</mat-icon>
+        </button>
+      </mat-list-item>
+  
+      <mat-list-item *ngFor="let id of [1,2,3,4,5]" [routerLink]="'users/'+id" routerLinkActive="active">
+        <a matLine>User {{id}}</a>
+        <button mat-icon-button>
+          <mat-icon>person</mat-icon>
+        </button>
+      </mat-list-item>
+    </mat-nav-list>
   </mat-sidenav>
 
   <div class="sidenav-content">
